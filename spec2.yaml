@@ -1,0 +1,25 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: foobar
+  labels:
+    app: foobar
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: foobar
+  template:
+    metadata:
+      name: foobar
+      labels:
+        app: foobar
+    spec:
+      shareProcessNamespace: true
+      containers:
+        - name: foobar-job-dind
+          image: docker:dind
+          imagePullPolicy: Always
+          securityContext:
+            privileged: true

@@ -1,0 +1,17 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: foobar
+spec:
+  #schedule:  "*/2 * * * *"  # every two minutes
+  schedule:  "* * * * *"  # every minute
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: foobar-job-executor
+              image: ghcr.io/tibeer/skopeo_worker:latest
+              imagePullPolicy: Always
