@@ -16,4 +16,4 @@ RUN pip install --no-cache-dir -r requirements.txt \
 
 COPY skopeo_mirror_wrapper.py .
 
-CMD [ "python", "skopeo_mirror_wrapper.py" ]
+CMD ["python", "skopeo_mirror_wrapper.py"]

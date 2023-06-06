@@ -16,10 +16,7 @@ spec:
       labels:
         app: foobar
     spec:
-      shareProcessNamespace: true
       containers:
-        - name: foobar-job-dind
-          image: docker:dind
+        - name: foobar22222
+          image: ghcr.io/tibeer/skopeo_worker:latest
           imagePullPolicy: Always
-          securityContext:
-            privileged: true

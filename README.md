@@ -14,3 +14,12 @@ Thinks have to run on kubernetes.
 
 1. Wrap skopeo in Python
 2. Profit!
+
+## Building
+
+```sh
+kubectl delete -f spec2.yaml
+podman build --no-cache --platform linux/amd64 -f Containerfile -t ghcr.io/tibeer/skopeo_worker:latest
+podman push ghcr.io/tibeer/skopeo_worker:latest
+kubectl apply -f spec2.yaml
+```
