@@ -1,0 +1,37 @@
+---
+name: Build skopeo_worker
+
+"on":
+  workflow_dispatch:
+  push:
+    branches:
+      - 'main'
+    paths:
+      - 'Containerfile'
+      - 'requirements.txt'
+      - 'skopeo_mirror_wrapper.py'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone current repository
+        uses: actions/checkout@v3
+
+      - name: Build using buildah
+        id: build
+        uses: redhat-actions/buildah-build@v2
+        with:
+          image: ghcr.io/tibeer/skopeo_worker
+          tags: ghcr.io/tibeer/skopeo_worker:latest
+          containerfiles: |
+            ./Containerfile
+
+      - name: Push to ghcr.io
+        uses: redhat-actions/push-to-registry@v2
+        with:
+          image: ${{ steps.build.outputs.image }}
+          tags: ${{ steps.build.outputs.tags }}
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ github.token }}
